@@ -2,6 +2,8 @@
 
 A highly customized and optimized Neovim configuration focused on enhancing productivity and developer experience.
 
+![Dashboard Screenshot](assets/dashboard.png)
+
 ## Features
 **Intelligent Autocompletion** — powered by configured completion plugins for smooth and efficient coding. - **Integrated LSP Support** — seamless Language Server Protocol setup for smart code diagnostics, navigation, and refactoring. - **Custom Dashboard** — a clean and informative startup dashboard to quickly access recent files and sessions. - Additional quality-of-life improvements and plugin integrations for a modern Neovim experience.
 
