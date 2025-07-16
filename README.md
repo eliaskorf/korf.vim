@@ -5,21 +5,28 @@ A highly customized and optimized Neovim configuration focused on enhancing prod
 ![Dashboard Screenshot](assets/dashboard.png)
 
 ## Features
-**Intelligent Autocompletion** — powered by configured completion plugins for smooth and efficient coding. - **Integrated LSP Support** — seamless Language Server Protocol setup for smart code diagnostics, navigation, and refactoring. - **Custom Dashboard** — a clean and informative startup dashboard to quickly access recent files and sessions. - Additional quality-of-life improvements and plugin integrations for a modern Neovim experience.
+- **Intelligent Autocompletion** — powered by configured completion plugins for smooth and efficient coding.
+- **Integrated LSP Support** — seamless Language Server Protocol setup for smart code diagnostics, navigation, and refactoring.
+- **Custom Dashboard** — a clean and informative startup dashboard to quickly access recent files and sessions.
+- **Additional quality-of-life improvements** and plugin integrations for a modern Neovim experience.
 
 ## Included Plugins
-korf.vim comes preloaded and configured with essential plugins to boost your workflow, including but not limited to: - Autocompletion plugins (e.g., `nvim-cmp`, snippets) - LSP configuration plugins (e.g., `nvim-lspconfig`) - Dashboard plugins for Neovim startup screen - Various utility and UI enhancement plugins *(For a complete list, please refer to the plugin management config files.)*
+**korf.vim** comes preloaded and configured with essential plugins to boost your workflow, including but not limited to:
+- Autocompletion plugins (e.g., `nvim-cmp`, snippets)
+- LSP configuration plugins (e.g., `nvim-lspconfig`)
+- Dashboard plugins for Neovim startup screen
+- Various utility and UI enhancement plugins *(For a complete list, please refer to the plugin management config files.)*
 
-## Installation **Prerequisites:**
+## Installation
 
-- Neovim 0.7+ installed.
-- - Git installed. Clone this repository and follow your preferred plugin manager's setup procedure.
+**Prerequisites:**
+- Neovim 0.10+ installed.
+- Git installed. Clone this repository and follow your preferred plugin manager's setup procedure.
 
-**Example using [lazy.nvim]:**``
+**Example using [lazy.nvim]:**
 ```sh
-git clone [https://github.com/eliaskorf/korf.vim](https://github.com/eliaskorf/korf.vim) ~/.config/nvim
+git clone https://github.com/eliaskorf/korf.vim ~/.config/nvim
 ```
-
 
 Open Neovim and ensure plugins are installed and compiled (depends on your plugin manager).
 
