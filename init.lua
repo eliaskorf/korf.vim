@@ -1,10 +1,8 @@
 require("core.plugins") -- Load Plugins
 require("core.mappings") -- Load Keymappings
-require("core.config")
-require("core.options")
--- require("config.lazy")
+require("core.options") -- Load Options
 
---Plugins
+-- Link to plugins
 require("plugins.lsp")
 require("plugins.neotree")
 require("plugins.treesitter")
@@ -22,6 +20,4 @@ require("plugins.miniicons")
 require("plugins.wichkey")
 require("plugins.indent-blankline")
 require("plugins.cmp")
-
-
-vim.cmd("colorscheme kanagawa")
+require("plugins.dressing")
