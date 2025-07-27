@@ -8,10 +8,14 @@ function M.setup()
     return
   end
 
+  local types_status_ok, types = pcall(require, "cmp.types")
+  local has_custom_sorting = types_status_ok
+
   local luasnip_status_ok, luasnip = pcall(require, "luasnip")
-  if luasnip_status_ok then
-    require("luasnip.loaders.from_vscode").lazy_load()
-  end
+  -- Не вызываем lazy_load здесь, так как это делается в основном конфиге LuaSnip
+  -- if luasnip_status_ok then
+  --   require("luasnip.loaders.from_vscode").lazy_load()
+  -- end
 
   local lspkind_status_ok, lspkind = pcall(require, "lspkind")
   if not lspkind_status_ok then
@@ -29,6 +33,14 @@ function M.setup()
     TypeParameter = "󰊄"
   }
 
+  -- Пользовательская функция для понижения приоритета сниппетов LSP (например, Emmet)
+  local function deprioritize_lsp_snippet(entry1, entry2)
+    if not has_custom_sorting then return nil end
+    if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then return false end
+    if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then return true end
+    return nil
+  end
+
   cmp.setup({
     snippet = {
       expand = function(args)
@@ -40,65 +52,20 @@ function M.setup()
 
     mapping = cmp.mapping.preset.insert({
       ['<C-Space>'] = cmp.mapping.complete(),
-      
-      -- Улучшенное поведение Enter для CSS и других языков
-      ['<CR>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          local confirm_opts = {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }
-          local entry = cmp.get_selected_entry()
-          
-          -- Для сниппетов используем Insert поведение
-          if entry and entry.source.name == 'luasnip' then
-            confirm_opts.behavior = cmp.ConfirmBehavior.Insert
-          end
-          
-          cmp.confirm(confirm_opts)
-          
-          -- Автоматически пытаемся раскрыть сниппет
-          if luasnip_status_ok then
-            vim.defer_fn(function()
-              if luasnip.expandable() then
-                luasnip.expand()
-              end
-            end, 10)
-          end
-        else
-          fallback()
-        end
-      end),
-      
+      ['<CR>'] = cmp.mapping.confirm({
+        select = true,
+        behavior = cmp.ConfirmBehavior.Replace
+      }),
       ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      
-      -- Улучшенная навигация Tab/S-Tab
       ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          local entry = cmp.get_selected_entry()
-          -- Если выбран сниппет, подтверждаем и раскрываем
-          if entry and entry.source.name == 'luasnip' then
-            cmp.confirm({
-              behavior = cmp.ConfirmBehavior.Insert,
-              select = true,
-            })
-            if luasnip_status_ok then
-              vim.defer_fn(function()
-                if luasnip.expandable() then
-                  luasnip.expand()
-                end
-              end, 10)
-            end
-          else
-            cmp.select_next_item()
-          end
+          cmp.select_next_item()
         elseif luasnip_status_ok and luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
         else
           fallback()
         end
       end, { "i", "s" }),
-      
       ['<S-Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
@@ -108,7 +75,6 @@ function M.setup()
           fallback()
         end
       end, { "i", "s" }),
-      
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-e>'] = cmp.mapping.abort(),
@@ -150,9 +116,11 @@ function M.setup()
       ghost_text = true,
     },
 
+    -- Обновлённая сортировка с понижением приоритета сниппетов LSP
     sorting = {
       priority_weight = 2,
       comparators = {
+        deprioritize_lsp_snippet, -- Наша пользовательская функция
         cmp.config.compare.offset,
         cmp.config.compare.exact,
         cmp.config.compare.score,

@@ -7,7 +7,7 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- If lazy.nvim is not installed, clone it from GitHub
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git" -- Исправлен URL (убран лишний пробел)
   local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
@@ -115,6 +115,17 @@ require("lazy").setup({
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     -- ✨ AUTOCOMPLETION & SNIPPETS
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    -- Сначала объявляем LuaSnip с зависимостью от friendly-snippets
+    {
+      'L3MON4D3/LuaSnip',
+      dependencies = { 'rafamadriz/friendly-snippets' },
+      config = function()
+        -- Загружаем сниппеты из VSCode (включая friendly-snippets) лениво
+        require("luasnip.loaders.from_vscode").lazy_load()
+        print("LuaSnip configured with friendly-snippets")
+      end
+    },
+    -- Затем настраиваем nvim-cmp, который будет использовать LuaSnip
     {
       'hrsh7th/nvim-cmp',
       event = "VeryLazy",
@@ -124,10 +135,8 @@ require("lazy").setup({
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-cmdline',
-        -- Snippet engine
-        'L3MON4D3/LuaSnip',
+        -- Snippet engine (теперь это зависимость от уже объявленного плагина)
         'saadparwaiz1/cmp_luasnip',
-        'rafamadriz/friendly-snippets',
         -- Icons for completion items
         'onsails/lspkind.nvim'
       },
@@ -138,6 +147,23 @@ require("lazy").setup({
           cmp_plugin.setup()
         else
           vim.notify("Failed to load cmp plugin config", vim.log.levels.ERROR)
+        end
+      end,
+    },
+    -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    -- 🎨 VISUAL ENHANCEMENTS
+    -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    -- Colorizer for CSS, HTML, etc.
+    {
+      'NvChad/nvim-colorizer.lua',
+      event = "BufReadPre", -- Загружать при открытии файла
+      config = function()
+        -- Загружаем и запускаем настройку из отдельного файла
+        local status_ok, colorizer_plugin = pcall(require, "plugins.colorizer")
+        if status_ok then
+          colorizer_plugin.setup()
+        else
+          vim.notify("Failed to load colorizer plugin config", vim.log.levels.ERROR)
         end
       end,
     },
