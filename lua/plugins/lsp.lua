@@ -28,7 +28,7 @@ lspconfig.cssls.setup({
 lspconfig.emmet_language_server.setup({
   capabilities = capabilities,
   on_attach = on_attach,
-  filetypes = { "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "svelte", "vue" }, -- Убедись, что список полный
+  filetypes = { "astro", "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "svelte", "vue" }, -- Убедись, что список полный
   root_dir = lspconfig.util.root_pattern(".git", "package.json") or vim.fn.getcwd(),
   init_options = {
     includeLanguages = {
@@ -64,8 +64,44 @@ lspconfig.pyright.setup({
   capabilities = capabilities,
   on_attach = on_attach,
 })
--- Javascrip Typescript
+
+-- JavaScript/TypeScript - отключаем строгую проверку типов
 lspconfig.ts_ls.setup({
   capabilities = capabilities,
   on_attach = on_attach,
+  init_options = {
+    hostInfo = "neovim"
+  },
+  settings = {
+    javascript = {
+      validate = false,  -- Отключаем валидацию JavaScript
+      diagnostics = {
+        enable = false   -- Отключаем диагностику
+      }
+    },
+    typescript = {
+      validate = false,  -- Отключаем валидацию TypeScript
+      diagnostics = {
+        enable = false   -- Отключаем диагностику
+      }
+    }
+  }
+})
+
+lspconfig.astro.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+  filetypes = { "astro" },
+  settings = {
+    astro = {
+      features = {
+        codelens = true,
+        inlay_hints = true,
+        semantic_tokens = true,
+      },
+    },
+    typescript = {
+      tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib"
+    }
+  }
 })

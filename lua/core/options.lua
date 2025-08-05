@@ -12,9 +12,9 @@ o.langmap = [[йq,ЙQ,цw,ЦW,уe,УE,кr,КR,еt,ЕT,нy,НY,гu,ГU,шi,ШI,щ
 -- Options for tabs
 o.expandtab = true       -- использовать пробелы вместо tab
 o.tabstop = 2            -- ширина tab = 4 пробела
-o.shiftwidth = 2         -- размер отступа при автоотступе
+o.shiftwidth = 2         -- размер отступа при авто-отступе
 o.softtabstop = 2        -- размер tab при нажатии Tab в insert mode
-o.smartindent = true     -- умный автоотступ
+o.smartindent = true     -- умный авто-отступ
 
 -- Options for splits
 o.splitright = true       -- новые вертикальные сплиты справа
@@ -28,13 +28,16 @@ o.smartindent = true
 o.listchars:append({ tab = '→ ' })  -- Отображать символ табуляции
 o.list = true                       -- Включить отображение
 
+-- Spellchecking for Russian and English
+o.spell = true
+o.spelllang = { 'ru', 'en' }
 
 
 -- Options for search
 o.ignorecase = true      -- Игнорировать регистр при поиске
 o.smartcase = true       -- Не игнорировать регистр, если есть символы в верхнем регистре
 o.showmatch = true       -- Подсвечивать найденные текстовые объекты
-o.incsearch = true       -- инкрементальный поис
+o.incsearch = true       -- инкрементальный поиск
 
 -- Misc options
 o.fixeol = false

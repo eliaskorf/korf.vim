@@ -2,7 +2,7 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = {
     "astro",
     "css",
-    "scss",         -- SCSS (расширение CSS)
+    "scss",
     "html",
     "javascript",
     "typescript",
@@ -14,7 +14,7 @@ require('nvim-treesitter.configs').setup {
     "vimdoc",
     "php",
     "sql",
-    "svelte",       -- если имелся в виду Svelte
+    "svelte",
     "nginx",
     "pug",
     "glsl",
