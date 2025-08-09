@@ -54,7 +54,7 @@ function M.setup()
   --   end,
   -- })
 
-  print("nvim-colorizer configured from plugins/colorizer.lua")
+  --  print("nvim-colorizer configured from plugins/colorizer.lua")
 end
 
 return M

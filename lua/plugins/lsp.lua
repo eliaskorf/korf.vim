@@ -80,9 +80,9 @@ lspconfig.ts_ls.setup({
       }
     },
     typescript = {
-      validate = false,  -- Отключаем валидацию TypeScript
+      validate = true,  -- Отключаем валидацию TypeScript
       diagnostics = {
-        enable = false   -- Отключаем диагностику
+        enable = true   -- Отключаем диагностику
       }
     }
   }

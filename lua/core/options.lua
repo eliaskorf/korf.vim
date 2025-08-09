@@ -32,7 +32,6 @@ o.list = true                       -- Включить отображение
 o.spell = true
 o.spelllang = { 'ru', 'en' }
 
-
 -- Options for search
 o.ignorecase = true      -- Игнорировать регистр при поиске
 o.smartcase = true       -- Не игнорировать регистр, если есть символы в верхнем регистре
@@ -56,6 +55,19 @@ o.listchars = {
     extends = "›",
     precedes = "‹"
 }
+o.termguicolors = true        -- поддержка true color в терминале
+o.signcolumn = "yes"          -- всегда показывать колонку для знаков
+o.cmdheight = 2               -- высота командной строки
+o.clipboard = "unnamedplus"   -- Связывает буфер обмена Vim с системным буфером обмена через + регистр (X11/Wayland).
+o.splitright = true           -- Новые вертикальные сплиты :vsplit, :vnew появляются справа от текущего окна.
+o.splitbelow = true           -- Что делает: Новые горизонтальные сплиты :split, :new появляются под текущим окном.
+o.laststatus = 3
+
+-- Игнорировать эти файлы при поиске и навигации
+o.wildignore:append("*.o,*.obj,*.dll,*.exe,*.so,*.pyc")
+o.wildignore:append("node_modules/*,bower_components/*")
+o.wildignore:append("*.min.js,*.min.css")
+o.wildignore:append("dist/*,build/*,.git/*")
 
 cmd("autocmd BufEnter * set fo-=c fo-=r fo-=o")
 cmd("colorscheme kanagawa")

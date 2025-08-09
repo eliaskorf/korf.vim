@@ -166,7 +166,7 @@ function M.setup()
     })
   })
 
-  print("nvim-cmp configuration loaded successfully")
+  --  print("nvim-cmp configuration loaded successfully")
 end
 
 return M
