@@ -2,8 +2,8 @@ require("core.plugins") -- Load Plugins
 require("core.mappings") -- Load Keymappings
 require("core.options") -- Load Options
 
-local llm = require("modules.llm")
-llm.setup()
+-- local llm = require("modules.llm")
+-- llm.setup()
 
 -- Link to plugins
 require("plugins.lsp")
@@ -14,7 +14,7 @@ require("plugins.mason")
 require("plugins.dashboard")
 require("plugins.buffline")
 require("plugins.telescope")
--- `require("plugins.toggleterm")
+require("plugins.toggleterm")
 require("plugins.autopairs")
 require("plugins.autotag")
 require("plugins.comments")
