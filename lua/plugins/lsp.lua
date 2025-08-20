@@ -1,7 +1,7 @@
 -- ~/.config/nvim/lua/plugins/lsp.lua
 
 local lspconfig = require("lspconfig")
--- Убираем: local util = require("lspconfig.util") -- Это вызывало ошибку
+
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(client, bufnr)

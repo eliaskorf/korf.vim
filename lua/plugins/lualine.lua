@@ -1,7 +1,5 @@
 require('lualine').setup {
 
-
--- options --
   options = {
     icons_enabled = true,
     theme = 'gruvbox',
@@ -21,29 +19,35 @@ require('lualine').setup {
     }
   },
 
-  -- sections --
   sections = {
 
-	lualine_a = {
+    lualine_a = {
         {'mode', icon = {'', align='left', color={fg='#262622'}}}
     },
 
     lualine_b = {'branch', 'diff', 'diagnostics'},
+
     lualine_c = {
-	    'windows',
---	    {'filetype', icon_only = true},
-	    {'filename',
-	    path = 4,
-	    symbols = {
-		    modified = '', readonly = '', unnamed = '[No Name]', newfile = '[New]',}
-	    }
+      'windows',
+      -- {'filetype', icon_only = true},
+      {'filename',
+      path = 4,
+      symbols = {
+        modified = '', readonly = '', unnamed = '[No Name]', newfile = '[New]',
+        }
+      }
     },
+
     lualine_x = {'encoding', 'fileformat'},
+
     lualine_y = {'progress'},
+
     lualine_z = {
         {'location', icon = {'  ', align='left', color={fg='#262622', bg='#607f60'}}}
     },
+
   },
+
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
@@ -53,17 +57,16 @@ require('lualine').setup {
     lualine_z = {}
   },
 
- --  tabline = {},
+    --    tabline = {},
 
-
-  --    winbar = {
-  --    lualine_a = {'buffers'},
-  --    lualine_b = {},
-  --    lualine_c = {},
-  --    lualine_x = {},
-  --    lualine_y = {'hostname'},
- --     lualine_z = {'tabs'}
- --   },
+    --    winbar = {
+    --    lualine_a = {'buffers'},
+    --    lualine_b = {},
+    --    lualine_c = {},
+    --    lualine_x = {},
+    --    lualine_y = {'hostname'},
+    --    lualine_z = {'tabs'}
+    --    },
 
   inactive_winbar = {},
   extensions = {}
