@@ -2,10 +2,10 @@ require("core.plugins") -- Load Plugins
 require("core.mappings") -- Load Keymappings
 require("core.options") -- Load Options
 
--- local llm = require("modules.llm")
--- llm.setup()
+ local llm = require("modules.llm")
+ llm.setup()
 
--- Link to plugins
+-- Load plugins config files
 require("plugins.lsp")
 require("plugins.neotree")
 require("plugins.treesitter")

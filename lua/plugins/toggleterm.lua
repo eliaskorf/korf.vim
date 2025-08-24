@@ -26,7 +26,7 @@ function M.setup()
     open_mapping = [[<c-\>]],
     
     -- Скрывать номера строк в буфере терминала
-    hide_numbers = false,
+    hide_numbers = true,
     
     -- Затемнять фон терминала
     shade_terminals = true,
@@ -109,5 +109,6 @@ function M.setup()
 --  print("toggleterm configured from plugins/toggleterm.lua")
 end
 
-return M
+M.setup()
 
+return M
