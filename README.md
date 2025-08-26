@@ -16,12 +16,15 @@ A highly customized and optimized Neovim configuration focused on enhancing prod
 - LSP configuration plugins (e.g., `nvim-lspconfig`)
 - Dashboard plugins for Neovim startup screen
 - Various utility and UI enhancement plugins *(For a complete list, please refer to the plugin management config files.)*
+- Neovim Tips Plugin (:NeovimTips)
 
 ## Installation
 
 **Prerequisites:**
 - Neovim 0.10+ installed.
 - Git installed. Clone this repository and follow your preferred plugin manager's setup procedure.
+- Lua and Luarocks
+- Java (jdr)
 
 **Example using [lazy.nvim]:**
 ```sh

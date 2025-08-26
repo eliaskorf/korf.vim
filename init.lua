@@ -5,6 +5,8 @@ require("core.options") -- Load Options
  local llm = require("modules.llm")
  llm.setup()
 
+require("modules.notes")
+
 -- Load plugins config files
 require("plugins.lsp")
 require("plugins.neotree")
