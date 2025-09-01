@@ -70,4 +70,4 @@ o.wildignore:append("*.min.js,*.min.css")
 o.wildignore:append("dist/*,build/*,.git/*")
 
 cmd("autocmd BufEnter * set fo-=c fo-=r fo-=o")
-cmd("colorscheme kanagawa")
+-- cmd("colorscheme kanagawa")

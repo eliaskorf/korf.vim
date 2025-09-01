@@ -31,6 +31,28 @@ require("lazy").setup({
   spec = {
     -- 🎨 UI & THEMING
     { 'rebelot/kanagawa.nvim' },
+
+    -- { 'kyza0d/xeno.nvim',
+    --   lazy = false,
+    --   priority = 1000,
+    --   opts = {
+    --     transparent = true,
+    --     contrast = 0.05,
+    --   },
+    --   config = function(_, opts)
+    --     local xeno = require('xeno')
+    --    
+    --     xeno.config(opts)
+    --    
+    --     -- Create your custom theme
+    --     xeno.new_theme('my-theme', {
+    --       base = '#262622',
+    --       accent = '#a5a56b',
+    --     })
+    --     vim.cmd('colorscheme my-theme')
+    --   end,
+    -- },
+
     { 'glepnir/dashboard-nvim', event = 'VimEnter', dependencies = { 'nvim-tree/nvim-web-devicons' } },
     { 'akinsho/bufferline.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
     { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons', 'linrongbin16/lsp-progress.nvim' } },
