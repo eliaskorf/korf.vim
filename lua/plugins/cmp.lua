@@ -2,22 +2,13 @@
 local M = {}
 
 function M.setup()
-
   local cmp_status_ok, cmp = pcall(require, "cmp")
   if not cmp_status_ok then
     vim.notify("nvim-cmp not installed", vim.log.levels.WARN)
     return
   end
 
-  local types_status_ok, types = pcall(require, "cmp.types")
-  local has_custom_sorting = types_status_ok
-
   local luasnip_status_ok, luasnip = pcall(require, "luasnip")
-  -- Не вызываем lazy_load здесь, так как это делается в основном конфиге LuaSnip
-  -- if luasnip_status_ok then
-  --   require("luasnip.loaders.from_vscode").lazy_load()
-  -- end
-
   local lspkind_status_ok, lspkind = pcall(require, "lspkind")
   if not lspkind_status_ok then
     vim.notify("lspkind not installed", vim.log.levels.WARN)
@@ -25,22 +16,32 @@ function M.setup()
 
   -- Completion item icons
   local kind_icons = {
-    Text = "", Method = "󰆧", Function = "󰊕", Constructor = "",
-    Field = "󰇽", Variable = "󰂡", Class = "󰠱", Interface = "",
-    Module = "", Property = "󰜢", Unit = "", Value = "󰎠",
-    Enum = "", Keyword = "󰌋", Snippet = "", Color = "󰏘",
-    File = "󰈙", Reference = "󰈇", Folder = "󰉋", EnumMember = "",
-    Constant = "󰏿", Struct = "󰙅", Event = "", Operator = "󰆕",
-    TypeParameter = "󰊄"
+    Text = "",
+    Method = "  ",
+    Function = "  ",
+    Constructor = "",
+    Field = "  ",
+    Variable = "  ",
+    Class = "  ",
+    Interface = "",
+    Module = "",
+    Property = "  ",
+    Unit = "",
+    Value = "  ",
+    Enum = "",
+    Keyword = "  ",
+    Snippet = "",
+    Color = "  ",
+    File = "  ",
+    Reference = "  ",
+    Folder = "  ",
+    EnumMember = "",
+    Constant = "  ",
+    Struct = "  ",
+    Event = "",
+    Operator = "  ",
+    TypeParameter = "  "
   }
-
-  -- Пользовательская функция для понижения приоритета сниппетов LSP (например, Emmet)
-  local function deprioritize_lsp_snippet(entry1, entry2)
-    if not has_custom_sorting then return nil end
-    if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then return false end
-    if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then return true end
-    return nil
-  end
 
   cmp.setup({
     snippet = {
@@ -117,11 +118,10 @@ function M.setup()
       ghost_text = true,
     },
 
-    -- Обновлённая сортировка с понижением приоритета сниппетов LSP
     sorting = {
       priority_weight = 2,
       comparators = {
-        deprioritize_lsp_snippet, -- Наша пользовательская функция
+        -- ИСПРАВЛЕНО: Убран деприоритизатор, ломавший Emmet-сниппеты
         cmp.config.compare.offset,
         cmp.config.compare.exact,
         cmp.config.compare.score,
@@ -137,19 +137,19 @@ function M.setup()
   -- Command line completion
   cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
-    sources = {{ name = 'buffer' }}
+    sources = { { name = 'buffer' } }
   })
 
   cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources(
-      {{ name = 'path' }},
-      {{ name = 'cmdline' }}
+      { { name = 'path' } },
+      { { name = 'cmdline' } }
     )
   })
 
-  -- Language-specific configurations
-  cmp.setup.filetype({'css', 'scss', 'sass'}, {
+  -- Настройки для специфических типов файлов
+  cmp.setup.filetype({ 'css', 'scss', 'sass' }, {
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
@@ -166,8 +166,6 @@ function M.setup()
       { name = 'path' },
     })
   })
-
-  --  print("nvim-cmp configuration loaded successfully")
 end
 
 return M
