@@ -1,107 +1,74 @@
 -- ~/.config/nvim/lua/plugins/lsp.lua
-
-local lspconfig = require("lspconfig")
-
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(client, bufnr)
-  -- Пример маппинга: "K" — показать документацию
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr })
-  -- Можно добавить и другие общие LSP-маппинги здесь
 end
 
--- Setup language servers.
-
--- HTML
-lspconfig.html.setup({
+-- Глобальные настройки
+vim.lsp.config('*', {
   capabilities = capabilities,
   on_attach = on_attach,
 })
 
--- CSS
-lspconfig.cssls.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
+-- Конкретные серверы
+vim.lsp.config('cssls', {
+  filetypes = { "css", "scss", "sass", "less", "astro" },
 })
 
--- Emmet
-lspconfig.emmet_language_server.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-  filetypes = { "astro", "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "svelte", "vue" }, -- Убедись, что список полный
-  root_dir = lspconfig.util.root_pattern(".git", "package.json") or vim.fn.getcwd(),
-  init_options = {
-    includeLanguages = {
-      javascript = "javascriptreact",
-      typescript = "typescriptreact",
-    },
-    showSuggestionsAsSnippets = true,
-    triggerExpansionOnTab = true,
-    showExpandedAbbreviation = "always",
-    showAbbreviationSuggestions = true,
-    syntaxProfiles = {
-      html = {
-        attr_quotes = "single"
-       }
-    },
-    -- Переменные (пример)
-    -- variables = {
-    --   lang = "ru",
-    --   charset = "UTF-8"
-    -- }
-  }
+vim.lsp.config('cssmodules_ls', {
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 })
 
--- Astro
-lspconfig.astro.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-  filetypes = { "astro" },
-})
-
--- Python
-lspconfig.pyright.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
--- JavaScript/TypeScript - отключаем строгую проверку типов
-lspconfig.ts_ls.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-  init_options = {
-    hostInfo = "neovim"
+vim.lsp.config('emmet_language_server', {
+  filetypes = {
+    "html", "css", "javascriptreact", "typescriptreact",
+    "sass", "scss", "less", "svelte", "vue", "astro"
   },
-  settings = {
-    javascript = {
-      validate = false,  -- Отключаем валидацию JavaScript
-      diagnostics = {
-        enable = false   -- Отключаем диагностику
-      }
-    },
-    typescript = {
-      validate = true,  -- Отключаем валидацию TypeScript
-      diagnostics = {
-        enable = true   -- Отключаем диагностику
-      }
-    }
-  }
 })
 
-lspconfig.astro.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-  filetypes = { "astro" },
-  settings = {
-    astro = {
-      features = {
-        codelens = true,
-        inlay_hints = true,
-        semantic_tokens = true,
-      },
-    },
-    typescript = {
-      tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib"
+vim.lsp.config('ts_ls', {})
+
+vim.lsp.config('html', {
+  filetypes = { 'html', 'templ' },
+  single_file_support = true,
+  settings = {},
+  init_options = {
+    provideFormatter = true,
+    embeddedLanguages = { css = true, javascript = true },
+    configurationSection = { 'html', 'css', 'javascript' },
+  },
+})
+
+vim.lsp.config('astro', {})
+vim.lsp.config('pyright', {})
+
+
+
+
+vim.lsp.config('lua_ls', {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { "vim" }  -- сообщаем серверу о глобале
+            },
+            -- Дополнительно: подсказки для Neovim API (опционально, но полезно)
+            runtime = {
+                version = 'LuaJIT'
+            },
+            workspace = {
+                library = {
+                    vim.env.VIMRUNTIME,     -- стандартные библиотеки Neovim
+                    '${3rd}/luv/library'    -- для vim.uv.* функций
+                },
+                checkThirdParty = false
+            }
+        }
     }
-  }
+})
+
+-- Включаем все серверы
+vim.lsp.enable({
+  "lua_ls", "ts_ls", "emmet_language_server", "cssls", "cssmodules_ls",
+  "html", "astro", "pyright"
 })

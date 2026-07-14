@@ -2,6 +2,7 @@
 local M = {}
 
 function M.setup()
+
   local cmp_status_ok, cmp = pcall(require, "cmp")
   if not cmp_status_ok then
     vim.notify("nvim-cmp not installed", vim.log.levels.WARN)
@@ -170,4 +171,3 @@ function M.setup()
 end
 
 return M
-

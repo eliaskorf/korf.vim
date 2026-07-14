@@ -1,20 +1,28 @@
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fw', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
--- vim.keymap.set('n', '<Tab>', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-vim.keymap.set('n', '<leader>gb', builtin.git_branches, {})
--- vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
-vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
-vim.keymap.set('n', '<leader>ls', builtin.lsp_document_symbols, {})
-vim.keymap.set('n', 'gr', builtin.lsp_references,
-               {noremap = true, silent = true})
-vim.keymap.set('n', 'gd', builtin.lsp_definitions,
-               {noremap = true, silent = true})
-
 return {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
--- or                              , branch = '0.1.x',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-    }
+    'nvim-telescope/telescope.nvim',
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
+    -- 🔑 Все ваши горячие клавиши теперь безопасно обёрнуты для Lazy.
+    -- Neovim не будет вызывать 'telescope.builtin' при старте, пока вы не нажмете кнопку.
+    keys = {
+        { '<leader>ff', function() require('telescope.builtin').find_files() end, desc = "Find Files" },
+        { '<leader>fw', function() require('telescope.builtin').live_grep() end, desc = "Live Grep" },
+        { '<leader>fb', function() require('telescope.builtin').buffers() end, desc = "Buffers" },
+        { '<leader>fh', function() require('telescope.builtin').help_tags() end, desc = "Help Tags" },
+        { '<leader>gb', function() require('telescope.builtin').git_branches() end, desc = "Git Branches" },
+        { '<leader>gs', function() require('telescope.builtin').git_status() end, desc = "Git Status" },
+        { '<leader>ls', function() require('telescope.builtin').lsp_document_symbols() end, desc = "LSP Document Symbols" },
+        { 'gr', function() require('telescope.builtin').lsp_references() end, { noremap = true, silent = true, desc = "LSP References" } },
+        { 'gd', function() require('telescope.builtin').lsp_definitions() end, { noremap = true, silent = true, desc = "LSP Definitions" } },
+    },
+    config = function()
+        -- Настройки самого плагина (запускаются автоматически после его загрузки)
+        require('telescope').setup({
+            defaults = {
+                -- Здесь в будущем можно настроить внешний вид окон
+            }
+        })
+    end
+}

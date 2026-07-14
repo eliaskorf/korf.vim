@@ -1,5 +1,8 @@
+local km = vim.keymap
+
 vim.g.mapleader = " "
 
 -- NeoTree
-vim.keymap.set('n', '<leader>e', ':Neotree float focus<CR>')
+km.set('n', '<leader>e', ':Neotree float focus<CR>')
 
+km.set("n", "<C-v>", '"+p') -- нормальный paste

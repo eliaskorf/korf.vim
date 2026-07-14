@@ -1,11 +1,19 @@
 local o = vim.opt
 local cmd = vim.cmd
+local s = vim.set
 
 o.number = true               -- показывать номера строк
 o.relativenumber = true       -- относительная нумерация строк
 o.cursorline = true           -- подсветка текущей строки
-o.wrap = false                -- не переносить длинные строки
+o.wrap = true                -- перенос длинных строк
+o.linebreak = true
+o.textwidth = 0
+o.wrapmargin = 0
+o.showbreak = ' ↪ '          -- Показывать маркер переноса, например :set showbreak=↪
+
 -- o.scrolloff = 8            -- минимум 8 строк до края экрана при скролле
+
+o.clipboard = "unnamedplus"
 
 o.langmap = [[йq,ЙQ,цw,ЦW,уe,УE,кr,КR,еt,ЕT,нy,НY,гu,ГU,шi,ШI,щo,ЩO,зp,ЗP,х[,Х{,ъ],Ъ},фa,ФA,ыs,ЫS,вd,ВD,аf,АF,пg,ПG,рh,РH,оj,ОJ,лk,ЛK,дl,ДL,ж\;,Ж:,э',Э",яz,ЯZ,чx,ЧX,сc,СC,мv,МV,иb,ИB,тn,ТN,ьm,ЬM,б\\,,Б<,ю.,Ю>,ё~,Ё~]]
 
@@ -62,6 +70,8 @@ o.clipboard = "unnamedplus"   -- Связывает буфер обмена Vim 
 o.splitright = true           -- Новые вертикальные сплиты :vsplit, :vnew появляются справа от текущего окна.
 o.splitbelow = true           -- Что делает: Новые горизонтальные сплиты :split, :new появляются под текущим окном.
 o.laststatus = 3
+-- o.guifont = "FiraCode Nerd Font Mono:h11"
+
 
 -- Игнорировать эти файлы при поиске и навигации
 o.wildignore:append("*.o,*.obj,*.dll,*.exe,*.so,*.pyc")

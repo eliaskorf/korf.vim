@@ -8,7 +8,7 @@ local function default_header()
         '██╔═██╗ ██║   ██║██╔══██╗██╔══╝     ╚██╗ ██╔╝██║██║╚██╔╝██║',
         '██║  ██╗╚██████╔╝██║  ██║██║   ██╗   ╚████╔╝ ██║██║ ╚═╝ ██║',
         '╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝   ╚═╝    ╚═══╝  ╚═╝╚═╝     ╚═╝',
-        'The Art of Code                        https://korf.digital',
+        'The Art of Code                          https://elkorf.com',
         '', '', '',
     }
 end    
