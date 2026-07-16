@@ -12,6 +12,8 @@ return {
       python = { "flake8" },
       php = { "phpstan" },
       html = { "htmlhint" },
+      css = { "stylelint" },
+      scss = { "stylelint" }
     }
 
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

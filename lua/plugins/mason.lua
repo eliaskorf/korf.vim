@@ -16,14 +16,23 @@ return {
       ui = {
         border = "rounded",
         check_outdated_packages_on_open = true,
-        icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" },
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗"
+        },
       },
     })
 
-    -- Список ваших серверов
+    -- Список серверов
     local servers = {
-      "lua_ls", "ts_ls", "emmet_language_server", "cssls",
-      "html", "astro", "pyright"
+      "lua_ls",
+      "ts_ls",
+      "emmet_language_server",
+      "cssls",
+      "html",
+      "astro",
+      "pyright"
     }
 
     -- 2. Автоустановка серверов через Mason
@@ -58,7 +67,14 @@ return {
 
     -- Нативная настройка для Emmet (чтобы он работал в HTML, React и Svelte)
     vim.lsp.config("emmet_language_server", {
-      filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte" },
+      filetypes = {
+        "html",
+        "css",
+        "scss",
+        "javascriptreact",
+        "typescriptreact",
+        "svelte"
+      },
     })
 
     -- Активируем каждый сервер встроенным методом Neovim
@@ -68,7 +84,16 @@ return {
 
     -- 4. Автоматическая установка линтеров и форматировщиков (не-LSP)
     local mr = require("mason-registry")
-    local tools = { "prettier", "eslint_d", "black", "flake8", "php-cs-fixer", "phpstan", "htmlhint" }
+    local tools = {
+      "prettier",
+      "eslint_d",
+      "black",
+      "flake8",
+      "php-cs-fixer",
+      "phpstan",
+      "htmlhint",
+      "stylelint"
+    }
 
     for _, tool in ipairs(tools) do
       local p = mr.get_package(tool)
