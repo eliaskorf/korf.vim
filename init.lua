@@ -12,8 +12,7 @@ require("plugins.mason")
 require("plugins.conform")
 
 require("plugins.lint")
-require("plugins.autopairs")
-require("plugins.autotag")
+require("plugins.nvim-autopairs")
 require("plugins.buffline")
 require("plugins.cmp")
 require("plugins.comments")
@@ -34,9 +33,3 @@ require("plugins.wichkey")
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
-
--- === Принудительная загрузка Mason ===
-vim.defer_fn(function()
-  require("mason").setup()
-  require("mason-lspconfig").setup()
-end, 50)

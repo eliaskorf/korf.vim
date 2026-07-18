@@ -5,9 +5,12 @@ A highly customized and optimized Neovim configuration focused on enhancing prod
 ![Dashboard Screenshot](assets/dashboard.png)
 
 ## Features
-- **Intelligent Autocompletion** — powered by configured completion plugins for smooth and efficient coding.
-- **Integrated LSP Support** — seamless Language Server Protocol setup for smart code diagnostics, navigation, and refactoring.
-- **Custom Dashboard** — a clean and informative startup dashboard to quickly access recent files and sessions.
+
+## Features
+- **Native LSP Architecture** — Using Neovim 0.11+ `vim.lsp.config` and `vim.lsp.enable` for flawless code navigation.
+- **Smart Dual-Engine Formatting** — `conform.nvim` with automatic Biome/Prettier/LSP fallback, ensuring no process freezing.
+- **Automated Toolchain** — Built-in `mason.nvim` for isolated management of language servers and linters.
+- **Modern UI** — Includes Kanagawa dark theme, custom status lines, and dashboard.
 - **Additional quality-of-life improvements** and plugin integrations for a modern Neovim experience.
 
 ## Included Plugins
@@ -21,10 +24,11 @@ A highly customized and optimized Neovim configuration focused on enhancing prod
 ## Installation
 
 **Prerequisites:**
-- Neovim 0.10+ installed.
+- Neovim 0.12+ installed.
 - Git installed. Clone this repository and follow your preferred plugin manager's setup procedure.
 - Lua and Luarocks
 - Java (jdr)
+- pynvim (pip install pynvim (or pip3 install pynvim))
 
 **Example using [lazy.nvim]:**
 ```sh
@@ -37,6 +41,16 @@ Open Neovim and ensure plugins are installed and compiled (depends on your plugi
 ```sh
 nvim
 ```
+
+## Keymaps
+* `<leader>F` — Format buffer (Biome/Prettier/LSP)
+* `gl` — Show diagnostic under cursor
+* `<leader>q` — Project-wide diagnostics list
+* `<leader>nto` — Open Neovim tip dictionary
+
+## Configuration
+Edit `~/.config/nvim/lua/plugins/` files to manage servers and formatters.
+
 
 Enjoy autocompletion, LSP features, and a welcoming dashboard on startup.
 

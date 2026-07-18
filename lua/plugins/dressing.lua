@@ -10,7 +10,7 @@ require("dressing").setup({
     trim_prompt = true,
 
     -- Can be 'left', 'right', or 'center'
-    title_pos = "left",
+    title_pos = "center",
 
     -- The initial mode when the window opens (insert|normal|visual|select).
     start_mode = "insert",

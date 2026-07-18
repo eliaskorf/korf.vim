@@ -7,7 +7,7 @@ return {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    "hrsh7th/cmp-nvim-lsp", -- Добавлено: необходимо для автодополнения
+    "hrsh7th/cmp-nvim-lsp", -- необходимо для автодополнения
   },
 
   config = function()
@@ -71,11 +71,27 @@ return {
     })
 
     vim.lsp.config("emmet_language_server", {
-      filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte", "astro" },
+      filetypes = {
+        "html",
+        "css",
+        "scss",
+        "javascriptreact",
+        "typescriptreact",
+        "svelte",
+        "astro" },
     })
 
     vim.lsp.config("biome", {
-      filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "css", "html" },
+      filetypes = {
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "json",
+        "css",
+        "html"
+      },
+
       -- ДОБАВЛЯЕМ ЭТУ СТРОКУ: принудительно выставляем UTF-16 для синхронизации
       offset_encoding = "utf-16",
       -- ОТКЛЮЧАЕМ форматирование в Biome-LSP, так как за него отвечает conform.nvim
