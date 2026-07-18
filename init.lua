@@ -9,8 +9,8 @@ require("modules.notes")
 
 -- Load plugins config files
 require("plugins.mason")
-
 require("plugins.conform")
+
 require("plugins.lint")
 require("plugins.autopairs")
 require("plugins.autotag")
@@ -21,7 +21,7 @@ require("plugins.dashboard")
 require("plugins.dressing")
 require("plugins.indent-blankline")
 require("plugins.kanagawa")
-require("plugins.lsp")
+-- require("plugins.lsp")
 require("plugins.lualine")
 require("plugins.mini")
 require("plugins.neotree")

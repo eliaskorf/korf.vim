@@ -1,4 +1,3 @@
--- ~/.config/nvim/lua/plugins/mason.lua
 return {
   "williamboman/mason.nvim",
   lazy = false,
@@ -8,14 +7,17 @@ return {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
+    "hrsh7th/cmp-nvim-lsp", -- Добавлено: необходимо для автодополнения
   },
 
   config = function()
+    -- ОБЯЗАТЕЛЬНО: подгружаем lspconfig, чтобы Neovim узнал шаблоны запуска серверов
+    require("lspconfig")
+
     -- 1. Настройка интерфейса Mason
     require("mason").setup({
       ui = {
         border = "rounded",
-        check_outdated_packages_on_open = true,
         icons = {
           package_installed = "✓",
           package_pending = "➜",
@@ -24,7 +26,7 @@ return {
       },
     })
 
-    -- Список серверов
+    -- Список серверов (используем строгие системные имена nvim-lspconfig)
     local servers = {
       "lua_ls",
       "ts_ls",
@@ -32,7 +34,8 @@ return {
       "cssls",
       "html",
       "astro",
-      "pyright"
+      "pyright",
+      "biome"
     }
 
     -- 2. Автоустановка серверов через Mason
@@ -40,49 +43,63 @@ return {
       ensure_installed = servers,
     })
 
+    -- 3. Интеграция возможностей (Capabilities) с автодополнением nvim-cmp
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local cmp_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+    if cmp_lsp_ok then
+      capabilities = cmp_nvim_lsp.default_capabilities()
+    end
 
-    -- 3. Нативная активация серверов в стиле Neovim 0.12
-    -- Глобально настраиваем автоматическое включение inlay hints для всех LSP бафферов
-    vim.api.nvim_create_autocmd("LspAttach", {
-      callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
+    capabilities.general = {
+      positionEncodings = { "utf-16" }
+    }
 
-        -- ИСПРАВЛЕНО: Вызываем метод через двоеточие client:supports_method
+    -- Настраиваем глобальные параметры для ВСЕХ нативных серверов
+    vim.lsp.config("*", {
+      capabilities = capabilities,
+      -- Автоматическое включение inlay hints для всех поддерживающих это серверов
+      on_attach = function(client, bufnr)
         if client and client:supports_method("textDocument/inlayHint") then
-          -- ИСПРАВЛЕНО: Сначала передаем true (статус), затем таблицу-фильтр буфера
-          vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
       end,
     })
 
-
-    -- Кастомная нативная настройка для Lua (убираем ворнинг 'vim')
+    -- 4. Кастомные конфигурации конкретных серверов
     vim.lsp.config("lua_ls", {
-      settings = {
-        Lua = {
-          diagnostics = { globals = { "vim" } },
-        },
-      },
+      settings = { Lua = { diagnostics = { globals = { "vim" } } } },
     })
 
-    -- Нативная настройка для Emmet (чтобы он работал в HTML, React и Svelte)
     vim.lsp.config("emmet_language_server", {
-      filetypes = {
-        "html",
-        "css",
-        "scss",
-        "javascriptreact",
-        "typescriptreact",
-        "svelte"
-      },
+      filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte", "astro" },
     })
 
-    -- Активируем каждый сервер встроенным методом Neovim
+    vim.lsp.config("biome", {
+      filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "css", "html" },
+      -- ДОБАВЛЯЕМ ЭТУ СТРОКУ: принудительно выставляем UTF-16 для синхронизации
+      offset_encoding = "utf-16",
+      -- ОТКЛЮЧАЕМ форматирование в Biome-LSP, так как за него отвечает conform.nvim
+      on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end,
+    })
+
+    -- 5. Чистая нативная активация серверов силами ядра Neovim (с фиксом кодировки для Biome)
     for _, server in ipairs(servers) do
-      vim.lsp.enable(server)
+      if server == "biome" then
+        vim.lsp.enable("biome", {
+          capabilities = {
+            offsetEncoding = { "utf-16" },
+            positionEncodings = { "utf-16" }
+          }
+        })
+      else
+        vim.lsp.enable(server)
+      end
     end
 
-    -- 4. Автоматическая установка линтеров и форматировщиков (не-LSP)
+    -- 6. Автоматическая установка внешних инструментов (линтеры/форматтеры)
     local mr = require("mason-registry")
     local tools = {
       "prettier",
@@ -102,8 +119,7 @@ return {
       end
     end
 
-    -- 5. Добавляем пути к бинарникам Mason в PATH Neovim
-    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
-    vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
+    -- 7. Добавляем пути к бинарникам Mason в PATH Neovim
+    vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
   end,
 }
